@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class StudentService {
-    private final StudentRepository studentRepository;
+public class StudentService implements IStudentService {
+    private final IStudentRepository studentRepository;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(IStudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
