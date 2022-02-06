@@ -1,4 +1,4 @@
-package com.example.demo.student;
+package com.example.demo.student.data.models;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import java.time.Period;
 @Entity
 @Table
 @Data
-public class Student {
+public class StudentData {
     @Id
     @SequenceGenerator(
             name = "student_sequence",
@@ -28,17 +28,17 @@ public class Student {
     @Transient
     private Integer age;
 
-    public Student() {
+    public StudentData() {
 
     }
 
-    public Student(String name, String email, LocalDate birthDate) {
+    public StudentData(String name, String email, LocalDate birthDate) {
         this.name = name;
         this.email = email;
         this.birthDate = birthDate;
     }
 
     public Integer getAge() {
-        return Period.between(this.birthDate, LocalDate.now()).getYears();
+                         return Period.between(this.birthDate, LocalDate.now()).getYears();
     }
 }

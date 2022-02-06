@@ -1,5 +1,8 @@
-package com.example.demo.student;
+package com.example.demo.student.service;
 
+import com.example.demo.student.data.IStudentRepository;
+import com.example.demo.student.data.models.StudentData;
+import com.example.demo.student.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +19,12 @@ public class StudentService implements IStudentService {
         this.studentRepository = studentRepository;
     }
 
-    public List<Student> getStudents() {
+    public List<StudentData> getStudents() {
         return studentRepository.findAll().stream().unordered().toList();
     }
 
-    public void createNewStudent(Student student) {
-        Optional<Student> studentOptional = studentRepository.findStudentByEmail(student.getEmail());
+    public void createNewStudent(StudentData student) {
+        Optional<StudentData> studentOptional = studentRepository.findStudentByEmail(student.getEmail());
         if (studentOptional.isPresent())
             throw new IllegalStateException("Email taken");
 
@@ -38,7 +41,7 @@ public class StudentService implements IStudentService {
 
     @Transactional
     public void updateStudent(Long id, String name, String email) {
-        Student student = studentRepository
+        StudentData student = studentRepository
                 .findById(id).orElseThrow(() -> new IllegalStateException(
                         String.format("Student with id %s does not exists", id)
                 ));
@@ -47,7 +50,7 @@ public class StudentService implements IStudentService {
             student.setName(name);
 
         if (null != email && !email.isEmpty() && !student.getEmail().equals(email)) {
-            Optional<Student> studentOptional = studentRepository.findStudentByEmail(email);
+            Optional<StudentData> studentOptional = studentRepository.findStudentByEmail(email);
             if (studentOptional.isPresent())
                 throw new IllegalStateException("Email is taken");
         }

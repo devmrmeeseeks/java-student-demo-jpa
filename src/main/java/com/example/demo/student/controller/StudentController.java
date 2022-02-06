@@ -1,5 +1,7 @@
-package com.example.demo.student;
+package com.example.demo.student.controller;
 
+import com.example.demo.student.data.models.StudentData;
+import com.example.demo.student.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +18,12 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<Student> getStudents() {
+    public List<StudentData> getStudents() {
         return studentService.getStudents();
     }
 
     @PostMapping
-    public void registerNewStudent(@RequestBody Student student) {
+    public void registerNewStudent(@RequestBody StudentData student) {
         studentService.createNewStudent(student);
     }
 
