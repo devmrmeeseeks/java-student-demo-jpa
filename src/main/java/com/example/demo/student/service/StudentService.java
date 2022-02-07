@@ -19,10 +19,12 @@ public class StudentService implements IStudentService {
         this.studentRepository = studentRepository;
     }
 
+    @Override
     public List<StudentData> getStudents() {
         return studentRepository.findAll().stream().unordered().toList();
     }
 
+    @Override
     public void createNewStudent(StudentData student) {
         Optional<StudentData> studentOptional = studentRepository.findStudentByEmail(student.getEmail());
         if (studentOptional.isPresent())
@@ -31,6 +33,7 @@ public class StudentService implements IStudentService {
         studentRepository.save(student);
     }
 
+    @Override
     public void deleteStudent(Long id) {
         boolean exists = studentRepository.existsById(id);
         if (!exists)
@@ -39,6 +42,7 @@ public class StudentService implements IStudentService {
         studentRepository.deleteById(id);
     }
 
+    @Override
     @Transactional
     public void updateStudent(Long id, String name, String email) {
         StudentData student = studentRepository

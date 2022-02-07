@@ -1,14 +1,20 @@
 package com.example.demo.student.data.models;
 
 import lombok.Data;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 
-@Entity
-@Table
 @Data
+@Table
+@Entity
+@EntityListeners(AuditingEntityListener.class)
 public class StudentData {
     @Id
     @SequenceGenerator(
@@ -25,11 +31,16 @@ public class StudentData {
     private String email;
     private LocalDate birthDate;
 
+    @CreatedDate
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    private LocalDateTime updatedDate;
+
     @Transient
     private Integer age;
 
     public StudentData() {
-
     }
 
     public StudentData(String name, String email, LocalDate birthDate) {
@@ -39,6 +50,6 @@ public class StudentData {
     }
 
     public Integer getAge() {
-                         return Period.between(this.birthDate, LocalDate.now()).getYears();
+        return Period.between(this.birthDate, LocalDate.now()).getYears();
     }
 }
